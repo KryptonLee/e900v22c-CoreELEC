@@ -12,6 +12,9 @@ image_prefix="CoreELEC-Amlogic-ng.arm-19.4-Matrix"
 image_name="${image_prefix}-E900V22C"
 mount_point="${script_root}/mnt"
 dtb_file="${script_root}/common-files/e900v22c.dtb"
+rc_maps_cfg="${script_root}/common-files/rc_maps.cfg"
+rc_keymap_file="${script_root}/common-files/e900v22c.rc_keymap"
+remap_backspace_file="${script_root}/common-files/backspace.xml"
 
 add_driver_package() {
 	echo "Copying uwe5621ds wifi driver source code"
@@ -81,6 +84,27 @@ add_dtb2img() {
 	rm -rf ${mount_point}
 }
 
+add_rc_keymap2img() {
+	echo "Creating mount point"
+	mkdir ${mount_point}
+	echo "Mounting CoreELEC data partition"
+	sudo mount -o loop,offset=541065216 ${output_dir}/${image_name}.img ${mount_point}
+	echo "Creating rc_keymaps directory in data partition"
+	sudo mkdir -p -m 0775 ${mount_point}/.config/rc_keymaps
+	sudo mkdir -p -m 0755 ${mount_point}/.kodi/userdata/keymaps
+	echo "Copying rc_keymap files into data partition"
+	sudo cp ${rc_maps_cfg} ${mount_point}/.config/rc_maps.cfg
+	sudo chmod 0664 ${mount_point}/.config/rc_maps.cfg
+	sudo cp ${rc_keymap_file} ${mount_point}/.config/rc_keymaps/e900v22c
+	sudo chmod 0664 ${mount_point}/.config/rc_keymaps/e900v22c
+	sudo cp ${remap_backspace_file} ${mount_point}/.kodi/userdata/keymaps/backspace.xml
+	sudo chmod 0644 ${mount_point}/.kodi/userdata/keymaps/backspace.xml
+	echo "Unmounting CoreELEC boot partition"
+	sudo umount -d ${mount_point}
+	echo "Deleting mount point"
+	rm -rf ${mount_point}
+}
+
 compress_img() {
 	echo "Compressing CoreELEC image"
 	gzip ${output_dir}/${image_name}.img
@@ -94,4 +118,5 @@ move_img2out_dir
 delete_unneeded_img
 decompress_img
 add_dtb2img
+add_rc_keymap2img
 compress_img
