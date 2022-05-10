@@ -1,11 +1,17 @@
 #! /bin/sh
 version="19.4-Matrix"
+script_root="${PWD}"
 coreelec_name="CoreELEC-${version}"
-coreelec_code_path="${PWD}/${coreelec_name}"
-coreelec_source_file="${PWD}/${coreelec_name}.tar.gz"
+coreelec_code_path="${script_root}/${coreelec_name}"
+coreelec_source_file="${script_root}/${coreelec_name}.tar.gz"
 coreelec_source_url="https://github.com/CoreELEC/CoreELEC/archive/refs/tags/${version}.tar.gz"
 amlogic_driver_path="${coreelec_code_path}/projects/Amlogic-ce/packages/linux-drivers/amlogic"
-patch_file="${PWD}/patches/19.4/0001-fix-compile-error.patch"
+patch_file="${script_root}/patches/19.4/0001-fix-compile-error.patch"
+output_dir="${script_root}/output"
+image_prefix="CoreELEC-Amlogic-ng.arm-19.4-Matrix"
+image_name="${image_prefix}-E900V22C"
+mount_point="${script_root}/mnt"
+dtb_file="${script_root}/common-files/e900v22c.dtb"
 
 add_driver_package() {
 	echo "Copying uwe5621ds wifi driver source code"
@@ -34,10 +40,58 @@ prepare_source_code() {
 	fi
 }
 
+build_coreelec() {
+	echo "Starting building CoreELEC"
+	cd ${coreelec_code_path}
+	CUSTOM_GIT_HASH="_"
+	export CUSTOM_GIT_HASH
+	make image || exit 1
+}
+
+move_img2out_dir() {
+	if [ ! -d "${script_root}/output" ]; then
+		echo "Creating output directory"
+		mkdir ${output_dir}
+	fi
+	echo "Moving CoreELEC image to output directory"
+	mv ${coreelec_code_path}/target/${image_prefix}*-Generic.img.gz \
+		${output_dir}/${image_name}.img.gz
+}
+
+delete_unneeded_img() {
+	echo "Deleting unneeded CoreELEC images"
+	rm -f ${coreelec_code_path}/target/*
+}
+
+decompress_img() {
+	echo "Decompressing CoreELEC image"
+	gzip -d ${output_dir}/${image_name}.img.gz
+}
+
+add_dtb2img() {
+	echo "Creating mount point"
+	mkdir ${mount_point}
+	echo "Mounting CoreELEC boot partition"
+	sudo mount -o loop,offset=4194304 ${output_dir}/${image_name}.img ${mount_point}
+	echo "Copying DTB file into boot partition"
+	sudo cp ${dtb_file} ${mount_point}/dtb.img
+	echo "Unmounting CoreELEC boot partition"
+	sudo umount -d ${mount_point}
+	echo "Deleting mount point"
+	rm -rf ${mount_point}
+}
+
+compress_img() {
+	echo "Compressing CoreELEC image"
+	gzip ${output_dir}/${image_name}.img
+	sha256sum ${output_dir}/${image_name}.img.gz > ${output_dir}/${image_name}.img.gz.sha256
+}
+
 echo "Welcome to build CoreELEC for Skyworth E900V22C!"
 prepare_source_code
-echo "Start building CoreELEC"
-cd ${coreelec_code_path}
-CUSTOM_GIT_HASH="_"
-export CUSTOM_GIT_HASH
-make image
+build_coreelec
+move_img2out_dir
+delete_unneeded_img
+decompress_img
+add_dtb2img
+compress_img
