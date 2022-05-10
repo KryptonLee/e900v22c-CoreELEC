@@ -1,0 +1,81 @@
+diff --git a/projects/Amlogic-ce/devices/Amlogic-ng/options b/projects/Amlogic-ce/devices/Amlogic-ng/options
+index 2ba553826e..3163863ede 100644
+--- a/projects/Amlogic-ce/devices/Amlogic-ng/options
++++ b/projects/Amlogic-ce/devices/Amlogic-ng/options
+@@ -114,7 +114,7 @@
+     ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS gpu-aml openvfd-driver wifi_dummy-aml media_modules-aml
+                         ap6xxx-aml ssv6xxx-aml mt7668-aml RTL8188FTV-aml RTL8189ES-aml RTL8189FS-aml
+                         RTL8723BS-aml RTL8814AU RTL8822BU-aml RTL8822BS-aml RTL8822CS-aml RTL8152-aml
+-                        RTL8821CS-aml qca9377-aml qca6174-aml"
++                        RTL8821CS-aml qca9377-aml qca6174-aml UWE5621DS-aml"
+ 
+   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+   # Space separated list is supported,
+diff --git a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_C4/package.mk b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_C4/package.mk
+index 8e14857577..2fc645dd78 100644
+--- a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_C4/package.mk
++++ b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_C4/package.mk
+@@ -2,8 +2,8 @@
+ # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
+ 
+ PKG_NAME="u-boot-Odroid_C4"
+-PKG_VERSION="43d26e1865333916d7889a586948e11b83b2c558"
+-PKG_SHA256="7258b7443d4b8ea2e7d9543c076ecf3cf53c546cff6138cd5f770a536dcabf1f"
++PKG_VERSION="56f0441a49d9b2820b8cdaa2da22e306fb0e759d"
++PKG_SHA256="29487e5cae1611e2219c0312745be49f7a3852decf2209582e62772e0a7147cd"
+ PKG_LICENSE="GPL"
+ PKG_SITE="https://www.denx.de/wiki/U-Boot"
+ PKG_URL="https://github.com/CoreELEC/u-boot/archive/$PKG_VERSION.tar.gz"
+diff --git a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_N2/package.mk b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_N2/package.mk
+index 6c8d5385f9..6dd36def0a 100644
+--- a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_N2/package.mk
++++ b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Odroid_N2/package.mk
+@@ -2,8 +2,8 @@
+ # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
+ 
+ PKG_NAME="u-boot-Odroid_N2"
+-PKG_VERSION="43d26e1865333916d7889a586948e11b83b2c558"
+-PKG_SHA256="7258b7443d4b8ea2e7d9543c076ecf3cf53c546cff6138cd5f770a536dcabf1f"
++PKG_VERSION="56f0441a49d9b2820b8cdaa2da22e306fb0e759d"
++PKG_SHA256="29487e5cae1611e2219c0312745be49f7a3852decf2209582e62772e0a7147cd"
+ PKG_LICENSE="GPL"
+ PKG_SITE="https://www.denx.de/wiki/U-Boot"
+ PKG_URL="https://github.com/CoreELEC/u-boot/archive/$PKG_VERSION.tar.gz"
+diff --git a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero/package.mk b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero/package.mk
+index f3a9eddd99..e366c55e2d 100644
+--- a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero/package.mk
++++ b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero/package.mk
+@@ -2,8 +2,8 @@
+ # Copyright (C) 2021-present Team CoreELEC (https://coreelec.org)
+ 
+ PKG_NAME="u-boot-Radxa_Zero"
+-PKG_VERSION="43d26e1865333916d7889a586948e11b83b2c558"
+-PKG_SHA256="7258b7443d4b8ea2e7d9543c076ecf3cf53c546cff6138cd5f770a536dcabf1f"
++PKG_VERSION="56f0441a49d9b2820b8cdaa2da22e306fb0e759d"
++PKG_SHA256="29487e5cae1611e2219c0312745be49f7a3852decf2209582e62772e0a7147cd"
+ PKG_LICENSE="GPL"
+ PKG_SITE="https://www.denx.de/wiki/U-Boot"
+ PKG_URL="https://github.com/CoreELEC/u-boot/archive/$PKG_VERSION.tar.gz"
+diff --git a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero2/package.mk b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero2/package.mk
+index 304e25fc22..e7c34e3397 100644
+--- a/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero2/package.mk
++++ b/projects/Amlogic-ce/devices/Amlogic-ng/packages/u-boot-Radxa_Zero2/package.mk
+@@ -2,8 +2,8 @@
+ # Copyright (C) 2022-present Team CoreELEC (https://coreelec.org)
+ 
+ PKG_NAME="u-boot-Radxa_Zero2"
+-PKG_VERSION="43d26e1865333916d7889a586948e11b83b2c558"
+-PKG_SHA256="7258b7443d4b8ea2e7d9543c076ecf3cf53c546cff6138cd5f770a536dcabf1f"
++PKG_VERSION="7d71ab11695fa8cfdc96b87f6a837f4828f49de4"
++PKG_SHA256="cf5c0e5c3797117486332a278c6e80bc61960539d95261ff383bab6678986a63"
+ PKG_LICENSE="GPL"
+ PKG_SITE="https://www.denx.de/wiki/U-Boot"
+ PKG_URL="https://github.com/CoreELEC/u-boot/archive/$PKG_VERSION.tar.gz"
+diff --git a/projects/Amlogic-ce/packages/linux-drivers/amlogic/wifi_dummy-aml/modules-load.d/wifi_dummy.conf b/projects/Amlogic-ce/packages/linux-drivers/amlogic/wifi_dummy-aml/modules-load.d/wifi_dummy.conf
+index e3a06c7644..dc5aaf4a1e 100644
+--- a/projects/Amlogic-ce/packages/linux-drivers/amlogic/wifi_dummy-aml/modules-load.d/wifi_dummy.conf
++++ b/projects/Amlogic-ce/packages/linux-drivers/amlogic/wifi_dummy-aml/modules-load.d/wifi_dummy.conf
+@@ -1 +1,3 @@
+ wifi_dummy
++uwe5621_bsp_sdio
++sprdwl_ng
