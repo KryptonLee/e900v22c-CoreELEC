@@ -18,20 +18,24 @@ apply_patches() {
 }
 
 download_source_code() {
+	echo "Start downloading CoreELEC-${version} source code"
+	wget ${coreelec_source_url} -O ${coreelec_source_file}
+	tar -zxf ${coreelec_source_file}
+	rm -f ${coreelec_source_file}
+}
+
+prepare_source_code() {
 	if [ -d "${coreelec_code_path}" ]; then
 		echo "Using CoreELEC-${version} source code in local directory"
 	else
-		echo "Start downloading CoreELEC-${version} source code"
-		wget ${coreelec_source_url} -O ${coreelec_source_file}
-		tar -zxf ${coreelec_source_file}
+		download_source_code
 		add_driver_package
 		apply_patches
-		rm -f ${coreelec_source_file}
 	fi
 }
 
 echo "Welcome to build CoreELEC for Skyworth E900V22C!"
-download_source_code
+prepare_source_code
 echo "Start building CoreELEC"
 cd ${coreelec_code_path}
 CUSTOM_GIT_HASH="_"
