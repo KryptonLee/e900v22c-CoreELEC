@@ -9,9 +9,10 @@ amlogic_driver_path="${coreelec_code_path}/projects/Amlogic-ce/packages/linux-dr
 patch_file="${script_root}/patches/19.4/0001-fix-compile-error.patch"
 output_dir="${script_root}/output"
 image_prefix="CoreELEC-Amlogic-ng.arm-19.4-Matrix"
-image_name="${image_prefix}-E900V22C"
+image_name="${image_prefix}-E900V22C-$(date +%Y.%m.%d)"
 mount_point="${script_root}/mnt"
 dtb_file="${script_root}/common-files/e900v22c.dtb"
+cache_cfg="${script_root}/common-files/advancedsettings.xml"
 rc_maps_cfg="${script_root}/common-files/rc_maps.cfg"
 rc_keymap_file="${script_root}/common-files/e900v22c.rc_keymap"
 remap_backspace_file="${script_root}/common-files/backspace.xml"
@@ -84,11 +85,16 @@ add_dtb2img() {
 	rm -rf ${mount_point}
 }
 
-add_rc_keymap2img() {
+add_custom_cfg2img() {
 	echo "Creating mount point"
 	mkdir ${mount_point}
 	echo "Mounting CoreELEC data partition"
 	sudo mount -o loop,offset=541065216 ${output_dir}/${image_name}.img ${mount_point}
+	echo "Creating userdata directory in data partition"
+	sudo mkdir -p -m 0755 ${mount_point}/.kodi/userdata
+	echo "Copying cache config file into data partition"
+	sudo cp ${cache_cfg} ${mount_point}/.kodi/userdata/advancedsettings.xml
+	sudo chmod 0644 ${mount_point}/.kodi/userdata/advancedsettings.xml
 	echo "Creating rc_keymaps directory in data partition"
 	sudo mkdir -p -m 0775 ${mount_point}/.config/rc_keymaps
 	sudo mkdir -p -m 0755 ${mount_point}/.kodi/userdata/keymaps
@@ -118,5 +124,5 @@ move_img2out_dir
 delete_unneeded_img
 decompress_img
 add_dtb2img
-add_rc_keymap2img
+add_custom_cfg2img
 compress_img

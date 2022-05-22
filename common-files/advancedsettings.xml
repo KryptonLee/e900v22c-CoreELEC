@@ -1,0 +1,7 @@
+<advancedsettings>
+  <cache>
+    <buffermode>4</buffermode>
+    <memorysize>536870912</memorysize>
+    <readfactor>10</readfactor>
+  </cache>
+</advancedsettings>
