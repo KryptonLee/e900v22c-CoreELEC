@@ -2,8 +2,8 @@
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="UWE5621DS-aml"
-PKG_VERSION="906c7db22fbe0a233955f20227c3b3d778d801e7"
-PKG_SHA256="202187a989e748c3ad94b1271239decd2b15f6dc34e1b82d6061240e01b4fdb6"
+PKG_VERSION="0c12c46df48da9592abc7848335482e68d23e28a"
+PKG_SHA256="a907810fc44ac22794de0bd3c8c4135dc373239dff63fca52c575c2f7f849e5e"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/KryptonLee/uwe5621ds-aml"
