@@ -11,7 +11,7 @@ The remote keymap files has been packed into the image file. Unfortunately the n
 1. Install the necessary packages (E.g Ubuntu 20.04 LTS user)
 ```yaml
 sudo apt-get update -y
-sudo apt-get install -y make gcc git texinfo gzip
+sudo apt-get install -y make gcc git texinfo gzip squashfs-tools
 ```
 
 2. Clone the repository to the local. `git clone https://github.com/KryptonLee/e900v22c-CoreELEC.git`
