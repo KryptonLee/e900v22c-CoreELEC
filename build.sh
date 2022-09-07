@@ -63,6 +63,19 @@ add_custom_cfg2img() {
 	sudo cp ${remap_backspace_file} ${mount_point}/.kodi/userdata/keymaps/backspace.xml
 	sudo chmod 0644 ${mount_point}/.kodi/userdata/keymaps/backspace.xml
 
+	echo "Creating modules-load.d directory"
+	sudo mkdir -p -m 0775 ${mount_point}/.config/modules-load.d
+	echo "Copying module-load file for uwe5621ds"
+	sudo cp ${wifi_module_load_file} ${mount_point}/.config/modules-load.d/wifi_dummy.conf
+	sudo chmod 0644 ${mount_point}/.config/modules-load.d/wifi_dummy.conf
+
+	echo "Creating system.d directory"
+	sudo mkdir -p -m 0775 ${mount_point}/.config/system.d/multi-user.target.wants
+	echo "Copying bluetooth service file for uwe5621ds"
+	sudo cp ${bt_service_file} ${mount_point}/.config/system.d/sprd_sdio-firmware-aml.service
+	sudo chmod 0644 ${mount_point}/.config/system.d/sprd_sdio-firmware-aml.service
+	sudo ln -s /storage/.config/system.d/sprd_sdio-firmware-aml.service ${mount_point}/.config/system.d/multi-user.target.wants/sprd_sdio-firmware-aml.service
+
 	echo "Unmounting CoreELEC boot partition"
 	sudo umount -d ${mount_point}
 	echo "Deleting mount point"
